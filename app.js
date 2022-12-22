@@ -48,3 +48,34 @@ numbers.push(6);
 console.log(numbers);
 numbers.pop();
 console.log(numbers);
+
+//Fonction 1
+function pair(a){
+    if(a % 2 === 0){
+        return a = true
+    } else {
+        return a = false
+    }
+}
+
+console.log(pair(4))
+console.log(pair(7))
+
+//Fonction 2
+function somme([a,b,c,d,e]){
+    return a + b + c + d + e
+}
+
+let array = [5,5,5,5,5]
+console.log(somme(array))
+
+//Fonction 3
+function reverseString(str){
+   let split = str.split("")
+   let reversed = split.reverse("")
+   let joined = reversed.join("")
+
+   return joined
+}
+
+console.log(reverseString("bonjour copain"))
