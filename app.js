@@ -52,9 +52,9 @@ console.log(numbers);
 //Fonction 1
 function pair(a){
     if(a % 2 === 0){
-        return a = true
+        return true
     } else {
-        return a = false
+        return false
     }
 }
 
@@ -62,8 +62,12 @@ console.log(pair(4))
 console.log(pair(7))
 
 //Fonction 2
-function somme([a,b,c,d,e]){
-    return a + b + c + d + e
+function somme(numbers){
+    let result = 0
+    for(let i = 0; i < numbers.length; i++){
+        result += numbers[i]
+    }
+    return result;
 }
 
 let array = [5,5,5,5,5]
