@@ -72,7 +72,7 @@ console.log(somme(array))
 //Fonction 3
 function reverseString(str){
    let split = str.split("")
-   let reversed = split.reverse("")
+   let reversed = split.reverse()
    let joined = reversed.join("")
 
    return joined
