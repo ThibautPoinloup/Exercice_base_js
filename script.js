@@ -29,4 +29,4 @@ function prenom(){
     return tableau
 }
 
-console.log(prenom)
+console.log(prenom())
