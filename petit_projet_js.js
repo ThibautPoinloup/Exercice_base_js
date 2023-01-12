@@ -1,105 +1,110 @@
-// 1. Définissez une variable products qui est un objet avec des propriétés qui correspondent aux noms de produits et des
-// valeurs qui sont les prix de chaque produit. Par exemple :
-// {
-// "chaussures de sport": 49.99,
-// "pantalon": 29.99,
-// "chemise": 15.99
-// }
+console.clear();
 
-let products = {
-    "chaussures de sport": 49.99,
+const products = {
+    "chaussures de sport": 60.99,
     "pantalon": 29.99,
     "chemise": 15.99
+};
+
+function getProductPrice(productName) {
+    return products[productName];
 }
 
-console.log(products)
+// console.log(getProductPrice("pantalon"))
 
+function getProductInfo(productsList) {
+    // const productsArray = productsList.replaceAll(', ', ',').split(',');
 
-// 2. Définissez une fonction getProductPrice qui prend en entrée un nom de produit et qui renvoie son prix. Utilisez la
-// variable products pour accéder au prix du produit.
-
-function getProductPrice(a){
-    if (a === "chemise"){
-        let chemise = products.chemise;
-        return chemise;
-    } else if (a === "chaussures de sport"){
-        let chaussure = products["chaussures de sport"];
-        return chaussure;
-    } else if (a === "pantalon"){
-        let pantalon = products.pantalon;
-        return pantalon;
-    } else {
-        console.log("no products valide");
+    const filteredArray = filterByPrice(productsList, 50);
+    console.log(filteredArray)
+    if (!productsList) {
+        return false;
     }
-   
+    
+    const result = [];
+
+    filteredArray.forEach((product) => {
+        let productPrice = getProductPrice(product);
+
+        if (productPrice > 50) {
+            productPrice = applyDiscount(productPrice, 10);
+        }
+
+        if (product === "pantalon") {
+            result.push(`Le ${product} coûte ${productPrice}€`);
+        } else if (product === "chemise") {
+            result.push(`La ${product} coûte ${productPrice}€`);
+        } else if (product === "chaussures de sport") {
+            result.push(`Les ${product} coûtent ${productPrice}€`);
+        } else {
+            result.push(`${product} coûte ${productPrice}€`);
+        }
+    });
+
+    return result.join(', ');
 }
 
-console.log(getProductPrice("pantalon"))
-console.log(getProductPrice("chaussures de sport"))
-console.log(getProductPrice("chemise"))
+console.log(getProductInfo(products));
 
-// 3. Définissez une fonction getProductInfo qui prend en entrée une liste de noms de produits (une chaîne de caractères
-// séparée par des virgules) et qui renvoie une chaîne de caractères avec le nom de chaque produit suivi de son prix. Utilisez
-// la fonction getProductPrice pour obtenir les prix de chaque produit. Par exemple, si la liste de produits est
-// "chaussures de sport, pantalon, chemise" , la fonction doit renvoyer "Les chaussures de sport coûtent
-// 49.99€, le pantalon coûte 29.99€ et la chemise coûte 15.99€."
+function getTotalPrice(productsList) {
+    let result = 0;
+    Object.keys(productsList).forEach((product) => {
+        result += getProductPrice(product);
+    })
 
-function getProductInfo(a, b, c){
-   a = `Les ${a} coûtent ${getProductPrice("chaussures de sport")} € `
-   b = `Le ${b} coûte ${getProductPrice("pantalon")} € `
-   c = `La ${c} coûte ${getProductPrice("chemise")} €`
-
-   let result = a + b + c
+    if (result > 50) {
+        result = applyDiscount(result, 10);
+    }
 
     return result;
 }
 
-console.log(getProductInfo("chaussures de sport" , "pantalon" , "chemise"));
+// console.log(getTotalPrice(products))
 
-
-// 4. Définissez une fonction getTotalPrice qui prend en entrée une liste de noms de produits (sous la même forme que
-// dans la fonction getProductInfo ) et qui renvoie le prix total de tous ces produits. Utilisez la fonction
-// getProductPrice pour obtenir les prix de chaque produit.
-
-function getTotalPrice(a, b, c){
-    a = getProductPrice(a)
-    b = getProductPrice(b)
-    c = getProductPrice(c)
-
-    result = a + b + c
-    return result
+function applyDiscount(price, discount) {
+    return Number((price - (price * (discount / 100))).toFixed(2))
 }
 
-console.log(`Le prix total est de ${getTotalPrice("chaussures de sport", "pantalon", "chemise")}€`)
+// console.log(applyDiscount(getProductPrice('pantalon'), 50))
 
-// 5. Définissez une fonction applyDiscount qui prend en entrée un prix et un taux de réduction (en pourcentage) et qui
-// renvoie le prix après application de la réduction. Par exemple, si le prix est de 100€ et que le taux de réduction est de 10%,
-// la fonction doit renvoyer 90€.
+function filterByPrice(productsList, maxPrice) {
+    const result = [];
 
+    Object.entries(productsList).forEach((product) => {
+        const key = product[0];
 
-// 6. Modifiez la fonction getProductInfo pour qu'elle utilise la fonction applyDiscount pour appliquer un taux de
-// réduction de 10% sur les prix de chaque produit si le prix de ce produit est supérieur à 50€. Utilisez une condition if
-// pour vérifier si le prix d'un produit est supérieur à 50€.
+        const productPrice = getProductPrice(key);
 
+        if (productPrice <= maxPrice) {
+            result.push(key);
+        }
+    })
 
-// 7. Modifiez la fonction getTotalPrice pour qu'elle utilise la fonction applyDiscount pour appliquer un taux de réduction
-// de 10% sur le prix total si ce prix est supérieur à 50€. Utilisez une condition if pour vérifier si le prix total est supérieur à
-// 50€.
+    return result;
+}
 
+// console.log(filterByPrice(products, 60.99));
 
-// 8. Définissez une fonction filterByPrice qui prend en entrée une liste de noms de produits et un prix maximum et qui
-// renvoie une liste de noms de produits qui ont un prix inférieur ou égal au prix maximum donné. Utilisez la fonction
-// getProductPrice pour obtenir les prix de chaque produit et utilisez une boucle for pour parcourir la liste de produits.
+function addProduct(product, price) {
+    if (!product || !price) {
+        return false;
+    }
 
+    products[product] = price;
+    return products;
+}
 
-// 9. Modifiez la fonction getProductInfo pour qu'elle utilise la fonction filterByPrice pour ne prendre en compte que
-// les produits qui ont un prix inférieur ou égal à 50€. Utilisez la fonction filterByPrice en lui passant en entrée la liste de
-// produits et le prix maximum de 50€.
+console.log(addProduct("Jean", 99.99))
+console.log(addProduct("Sweat", 50.99))
 
+function removeProduct(product) {
+    if (!product) {
+        return false;
+    }
 
-// 10. Définissez une fonction addProduct qui prend en entrée un nom de produit et un prix et qui ajoute ce produit à la
-// variable products . Assurez-vous de mettre à jour la variable products de manière permanente.
+    delete products[product];
+    return products;
+}
 
-
-// 11. Définissez une fonction removeProduct qui prend en entrée un nom de produit et qui supprime ce produit de la variable
-// products . Assurez-vous de mettre à jour la variable products de manière permanente.
+console.log(removeProduct("Jean"))
+console.log(removeProduct("pantalon"))
